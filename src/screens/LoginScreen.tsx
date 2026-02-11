@@ -1,6 +1,8 @@
+import { Alert, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Text, View } from '@/components/Themed';
+
+import { COLORS } from '@/constants/Colors';
 import { useAuthStore } from '@/src/store/authStore';
 import { useRouter } from 'expo-router';
 
@@ -8,6 +10,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const login = useAuthStore((s) => s.login);
+  const googleLogin = useAuthStore((s) => s.googleLogin);
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -22,6 +25,14 @@ export default function LoginScreen() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin();
+    } catch (error: any) {
+      Alert.alert('Google 로그인 실패', error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>로그인</Text>
@@ -29,24 +40,27 @@ export default function LoginScreen() {
       <TextInput
         style={styles.input}
         placeholder="이메일"
-        placeholderTextColor="#999"
+        placeholderTextColor={COLORS.textPlaceholder}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="비밀번호"
-        placeholderTextColor="#999"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <TextInput style={styles.input} placeholder="비밀번호" placeholderTextColor={COLORS.textPlaceholder} value={password} onChangeText={setPassword} secureTextEntry />
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>로그인</Text>
+      </TouchableOpacity>
+
+      <View style={styles.divider}>
+        <View style={styles.dividerLine} />
+        <Text style={styles.dividerText}>또는</Text>
+        <View style={styles.dividerLine} />
+      </View>
+
+      <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
+        <Text style={styles.googleButtonText}>Google로 로그인</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push('/(auth)/signup')}>
@@ -70,16 +84,16 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 14,
     fontSize: 16,
     marginBottom: 16,
-    backgroundColor: '#f9f9f9',
-    color: '#333',
+    backgroundColor: COLORS.bgLight,
+    color: COLORS.textDark,
   },
   button: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: COLORS.primary,
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
@@ -87,13 +101,42 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    color: '#fff',
+    color: COLORS.textWhite,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.border,
+  },
+  dividerText: {
+    marginHorizontal: 12,
+    color: COLORS.textPlaceholder,
+    fontSize: 14,
+  },
+  googleButton: {
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    marginBottom: 20,
+    backgroundColor: COLORS.bgWhite,
+  },
+  googleButtonText: {
+    color: COLORS.textDark,
     fontSize: 16,
     fontWeight: 'bold',
   },
   linkText: {
     textAlign: 'center',
-    color: '#FF6B6B',
+    color: COLORS.primary,
     fontSize: 14,
   },
 });

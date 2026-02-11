@@ -35,7 +35,13 @@
     "plugins": [
       "expo-router",
       "@react-native-firebase/app",
-      "@react-native-firebase/auth"
+      "@react-native-firebase/auth",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.795524297087-5jeahe43pj93rshp1vlkmltu7n4bljl6"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

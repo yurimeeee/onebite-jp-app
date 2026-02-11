@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import { COLORS } from '@/constants/Colors';
 import { useAuthStore } from '@/src/store/authStore';
 import { useRouter } from 'expo-router';
 
@@ -38,7 +39,7 @@ export default function SignupScreen() {
       <TextInput
         style={styles.input}
         placeholder="이메일"
-        placeholderTextColor="#999"
+        placeholderTextColor={COLORS.textPlaceholder}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -48,7 +49,7 @@ export default function SignupScreen() {
       <TextInput
         style={styles.input}
         placeholder="비밀번호 (6자 이상)"
-        placeholderTextColor="#999"
+        placeholderTextColor={COLORS.textPlaceholder}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -57,7 +58,7 @@ export default function SignupScreen() {
       <TextInput
         style={styles.input}
         placeholder="비밀번호 확인"
-        placeholderTextColor="#999"
+        placeholderTextColor={COLORS.textPlaceholder}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
@@ -88,16 +89,16 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 14,
     fontSize: 16,
     marginBottom: 16,
-    backgroundColor: '#f9f9f9',
-    color: '#333',
+    backgroundColor: COLORS.bgLight,
+    color: COLORS.textDark,
   },
   button: {
-    backgroundColor: '#FF6B6B',
+    backgroundColor: COLORS.primary,
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
@@ -105,13 +106,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    color: '#fff',
+    color: COLORS.textWhite,
     fontSize: 16,
     fontWeight: 'bold',
   },
   linkText: {
     textAlign: 'center',
-    color: '#FF6B6B',
+    color: COLORS.primary,
     fontSize: 14,
   },
 });

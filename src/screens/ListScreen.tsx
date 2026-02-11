@@ -1,21 +1,17 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
+
 import { COLORS } from '@/constants/Colors';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { useAuthStore } from '@/src/store/authStore';
 
-export default function HomeScreen() {
+export default function ListScreen() {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>홈</Text>
-      <Text style={styles.email}>{user?.email}</Text>
-
-      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-        <Text style={styles.logoutText}>로그아웃</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>리스트</Text>
     </View>
   );
 }

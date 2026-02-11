@@ -1,4 +1,5 @@
 import { Text, View } from '@/components/Themed';
+import { COLORS } from '@/constants/Colors';
 
 import React from 'react';
 import { StyleSheet } from 'react-native';
@@ -29,17 +30,17 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 14,
-    color: '#888',
+    color: COLORS.textLight,
     marginBottom: 30,
   },
   logoutButton: {
-    backgroundColor: '#eee',
+    backgroundColor: COLORS.bgGray,
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 30,
   },
   logoutText: {
     fontSize: 14,
-    color: '#333',
+    color: COLORS.textDark,
   },
 });

@@ -1,14 +1,14 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyAiEtJWiWvCghLXVo0mCvNEcC58r_ayEqE",
+  authDomain: "onebite-jp.firebaseapp.com",
+  projectId: "onebite-jp",
+  storageBucket: "onebite-jp.firebasestorage.app",
+  messagingSenderId: "795524297087",
+  appId: "1:795524297087:ios:5a50c431ce8d3bc4482a4a",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -16,3 +16,4 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export default app;
+

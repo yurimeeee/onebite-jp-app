@@ -1,7 +1,11 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import * as Speech from 'expo-speech';
+
+import React, { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
+
 import { COLORS } from '@/constants/Colors';
+import Entypo from '@expo/vector-icons/Entypo';
 
 export interface Word {
   wordId: string;
@@ -36,11 +40,7 @@ export default function Quiz({ words, onComplete }: QuizProps) {
 
   const choices = useMemo(() => {
     const correctAnswer = currentWord.ko;
-    const wrongAnswers = shuffle(
-      shuffledWords
-        .filter((w) => w.ko !== correctAnswer)
-        .map((w) => w.ko)
-    ).slice(0, 3);
+    const wrongAnswers = shuffle(shuffledWords.filter((w) => w.ko !== correctAnswer).map((w) => w.ko)).slice(0, 3);
     return shuffle([correctAnswer, ...wrongAnswers]);
   }, [currentWord, shuffledWords]);
 
@@ -65,7 +65,7 @@ export default function Quiz({ words, onComplete }: QuizProps) {
         }
       }, 1000);
     },
-    [selectedAnswer, currentWord, score, currentIndex, total, onComplete],
+    [selectedAnswer, currentWord, score, currentIndex, total, onComplete]
   );
 
   const getButtonStyle = (answer: string) => {
@@ -82,6 +82,14 @@ export default function Quiz({ words, onComplete }: QuizProps) {
     return [styles.choiceText, styles.disabledText];
   };
 
+  const speakJapanese = (text: string, isExample: boolean = false) => {
+    Speech.stop();
+    Speech.speak(text, {
+      language: 'ja-JP',
+      rate: isExample ? 0.4 : 0.5,
+      pitch: 1.0,
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.progress}>
@@ -91,16 +99,12 @@ export default function Quiz({ words, onComplete }: QuizProps) {
       <View style={styles.questionCard}>
         <Text style={styles.jpText}>{currentWord.jp}</Text>
         <Text style={styles.kanaText}>{currentWord.kana}</Text>
+        <Entypo className="mt-4" name="megaphone" size={24} color="#B1CFE9" onPress={() => speakJapanese(currentWord.jp)} />
       </View>
 
       <View style={styles.choicesContainer}>
         {choices.map((choice, index) => (
-          <TouchableOpacity
-            key={`${currentIndex}-${index}`}
-            style={getButtonStyle(choice)}
-            onPress={() => handleSelect(choice)}
-            activeOpacity={selectedAnswer !== null ? 1 : 0.7}
-          >
+          <TouchableOpacity key={`${currentIndex}-${index}`} style={getButtonStyle(choice)} onPress={() => handleSelect(choice)} activeOpacity={selectedAnswer !== null ? 1 : 0.7}>
             <Text style={getButtonTextStyle(choice)}>{choice}</Text>
           </TouchableOpacity>
         ))}
